@@ -170,14 +170,11 @@ CREATE TABLE `product` (
   `prod_serial` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `prod_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `prod_price` decimal(15,4) NOT NULL DEFAULT '0.0000',
-  `prod_detail` int(11) DEFAULT NULL,
   `catalog_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `prod_serial_UNIQUE` (`prod_serial`),
   KEY `prod_catalog_id_idx` (`catalog_id`),
-  KEY `prod_detail_fk_idx` (`prod_detail`),
-  CONSTRAINT `prod_catalog_fk` FOREIGN KEY (`catalog_id`) REFERENCES `catalog` (`id`),
-  CONSTRAINT `prod_detail_fk` FOREIGN KEY (`prod_detail`) REFERENCES `product_detail` (`id`)
+  CONSTRAINT `prod_catalog_fk` FOREIGN KEY (`catalog_id`) REFERENCES `catalog` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -204,7 +201,10 @@ CREATE TABLE `product_detail` (
   `color` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `view_num` int(11) DEFAULT NULL,
   `sold_num` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `prod_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `detail_prod_fk_idx` (`prod_id`),
+  CONSTRAINT `detail_prod_fk` FOREIGN KEY (`prod_id`) REFERENCES `product` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -338,4 +338,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-25 11:19:52
+-- Dump completed on 2020-06-25 17:03:36
