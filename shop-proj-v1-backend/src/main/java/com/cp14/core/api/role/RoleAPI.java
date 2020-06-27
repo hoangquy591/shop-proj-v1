@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cp14.core.base.ResponseBase;
 import com.cp14.core.role.IRoleService;
 import com.cp14.core.role.Role;
-
-
 
 @RestController
 @RequestMapping("/api/v1/role")
@@ -50,6 +49,35 @@ public class RoleAPI {
 		} catch (Exception e) {
 			response.setMessage(e.getMessage());
 			return new ResponseEntity<Role_getById_response>(response, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/create",method = RequestMethod.POST)
+	public ResponseEntity<Role_create_response> create(@RequestBody Role_create_request entity, HttpServletRequest request ) { 
+		Role_create_response response = new Role_create_response();
+		try {
+			Role role = entity.data;
+			role = roleService.save(role);
+			response.id = role.getId();
+			response.role = role;
+			response.setMessage("It's all OK");
+			return new ResponseEntity<Role_create_response>(response,HttpStatus.OK);
+		}catch (Exception e) {
+			response.setMessage(e.getMessage());
+		    return new ResponseEntity<Role_create_response>(response,HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/delete",method = RequestMethod.POST)
+	public ResponseEntity<ResponseBase> delete(@RequestBody Role_delete_request entity, HttpServletRequest request ) { 
+		ResponseBase response = new ResponseBase();
+		try {
+			roleService.deleteById(entity.id);
+			response.setMessage("It's all OK");
+			return new ResponseEntity<ResponseBase>(response,HttpStatus.OK);
+		}catch (Exception e) {
+			response.setMessage(e.getMessage());
+		    return new ResponseEntity<ResponseBase>(response,HttpStatus.OK);
 		}
 	}
 }
