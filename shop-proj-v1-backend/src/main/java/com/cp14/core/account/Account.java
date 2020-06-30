@@ -50,6 +50,8 @@ private static final long serialVersionUID = 1L;
     @JoinColumn(name="person_id",insertable=false,updatable =false)
     private Person person;
 	
+	//////////////////////
+	
 	@Transient
 	public String getRoleName() {
 		if(role!=null) {
@@ -65,6 +67,8 @@ private static final long serialVersionUID = 1L;
 		}
 		return "";
 	}
+	
+	//////////////////////
 
 	public Long getId() {
 		return id;
