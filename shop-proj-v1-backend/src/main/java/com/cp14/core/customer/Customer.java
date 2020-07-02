@@ -7,7 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
+import com.cp14.core.person.Person;
 
 @Table(name="customer")
 @Entity
@@ -24,7 +32,22 @@ public class Customer implements Serializable{
 	@Column(name ="cus_type")
     private Long cus_type;
 	
+	@NotFound(action = NotFoundAction.IGNORE)
+	@ManyToOne
+	@JoinColumn(name="person_id",insertable=false,updatable =false)
+	private Person person;
 	
+	//////////////////////
+		
+	@Transient
+	public String getPersonName() {
+		if(person!=null) {
+		return person.getName();
+		}
+		return "";
+	}
+	
+	//////////////////////
 
 	public Long getId() {
 		return id;
