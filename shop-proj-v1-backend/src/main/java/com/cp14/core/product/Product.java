@@ -48,10 +48,10 @@ public class Product implements Serializable{
 		
 	@Transient
 	public String getCatalogName() {
-	if(catalog!=null) {
-	return catalog.getCatalog_name();
-	}
-	return "";
+		if(catalog!=null) {
+			return catalog.getCatalog_name();
+		}
+		return "";
 	}
 	
 	//////////////////////
